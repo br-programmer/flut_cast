@@ -36,70 +36,67 @@ class CitiesProvider extends StateNotifier<CitiesState> {
     await _citiesLocalService.start();
     final cities = await _citiesLocalService.cities();
     if (cities.isNotEmpty) {
-      state = CitiesState.loadedState(
-        cities: cities..sort((a, b) => a.myLocation ? 0 : 1),
-      );
+      state = CitiesState.loadedState(cities: cities.firstMyLocation);
     }
     loadMyLocation();
   }
 
   Future<void> loadMyLocation() async {
     if (_location == null) return;
-    final result = await _searchRepository.reverse(
-      request: ReverseRequest(lat: _location.lat, lon: _location.lon),
-    );
-    state = switch (result) {
-      Right(value: final result) => _newLoadedStateFromCity(result),
-      Left() => switch (state) {
-          final CitiesLoadedState state => state,
-          _ => CitiesState.loadedState(cities: state.cities),
-        },
-    };
-    final city = switch (result) {
-      Right(value: final cityResult) => cityResult.copyWith(
-          myLocation: true,
-          id: myCity != null ? myCity!.id : _citiesLocalService.uuid,
-        ),
-      Left() => myCity,
-    };
-    if (city != null) {
-      _citiesLocalService.setCity(city);
-    }
+    final request = ReverseRequest(lat: _location.lat, lon: _location.lon);
+    final result = await _searchRepository.reverse(request: request);
+    final city = _newCityFromResult(result);
+    state = _newLoadedStateFromCity(city);
   }
 
-  CitiesState _newLoadedStateFromCity(City city) {
+  CitiesState _newLoadedStateFromCity(City? city) {
     final cities = [...state.cities];
-    final newCity = city.copyWith(
-      myLocation: true,
-      id: myCity != null ? myCity!.id : _citiesLocalService.uuid,
-    );
+    if (city == null) {
+      return CitiesState.loadedState(cities: cities.firstMyLocation);
+    }
     final index = cities.indexWhere((city) => city.myLocation);
     if (index != -1) {
-      cities[index] = newCity;
+      cities[index] = city;
     } else {
-      cities.add(newCity);
+      cities.add(city);
     }
-    return CitiesState.loadedState(
-      cities: cities..sort((a, b) => a.myLocation ? 0 : 1),
-    );
+    return CitiesState.loadedState(cities: cities.firstMyLocation);
+  }
+
+  City? _newCityFromResult(Either<HttpRequestFailure, City> result) {
+    return switch (result) {
+      Right(value: final cityResult) => cityResult.copyWith(
+          myLocation: true,
+          id: _cityId,
+        ),
+      Left() => _myCity,
+    };
   }
 
   Future<void> addNewCity(City city) async {
     final newCity = city.copyWith(id: _citiesLocalService.uuid);
     state = CitiesState.loadedState(
-      cities: [...state.cities..sort((a, b) => a.myLocation ? 0 : 1), newCity],
+      cities: [...state.cities.firstMyLocation, newCity],
     );
     return _citiesLocalService.setCity(newCity);
   }
 
   Future<bool> deleteCity(City city) async {
-    final cities = [...state.cities]
-      ..remove(city)
-      ..sort((a, b) => a.myLocation ? 0 : 1);
+    final cities = _cities.firstMyLocation..remove(city);
     state = CitiesState.loadedState(cities: cities);
     await _citiesLocalService.deleteCity(city.id!);
     return true;
   }
 
-  City? get myCity => state.cities.firstWhereOrNull((city) => city.myLocation);
+  City? get _myCity => state.cities.firstWhereOrNull((city) => city.myLocation);
+  List<City> get _cities => [...state.cities];
+  String get _cityId {
+    return _myCity != null ? _myCity!.id! : _citiesLocalService.uuid;
+  }
+}
+
+extension on List<City> {
+  List<City> get firstMyLocation {
+    return this..sort((a, b) => a.myLocation ? 0 : 1);
+  }
 }
