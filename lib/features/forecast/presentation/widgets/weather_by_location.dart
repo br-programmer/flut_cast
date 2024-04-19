@@ -64,7 +64,6 @@ class WeatherByLocation extends StatelessWidget {
               tween: IntTween(begin: 0, end: maximumTemperature),
               duration: duration750ms,
               builder: (_, value, __) => Text(
-                // TODO
                 context.texts.forecast.temperature.maximum(degree: value),
                 style: context.textTheme.titleLarge?.copyWith(
                   letterSpacing: 1,
