@@ -101,7 +101,7 @@ class PreviewCity extends ConsumerWidget {
     final exist = myCities.firstWhereOrNull((c) => c.title == city.title);
     final forecast = ref.watch(forecastNotifier(city)).forecast;
     final weather = forecast?.current.weather.first;
-    final background = weather?.background;
+    final shaderData = weather?.shaderData;
     return SizedBox(
       height: context.mediaQuery.size.height * .85,
       child: ClipRRect(
@@ -110,7 +110,7 @@ class PreviewCity extends ConsumerWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              if (background != null) background.image(fit: BoxFit.cover),
+              if (shaderData != null) FCWeatherShader(shaderData: shaderData),
               PageViewItem(city: city),
               Align(
                 alignment: Alignment.topCenter,

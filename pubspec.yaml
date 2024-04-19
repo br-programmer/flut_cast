@@ -54,3 +54,11 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  shaders:
+    - shaders/clear_sky.frag
+    - shaders/clouds.frag
+    - shaders/drizzle.frag
+    - shaders/rain.frag
+    - shaders/snow.frag
+    - shaders/thunderstorm.frag

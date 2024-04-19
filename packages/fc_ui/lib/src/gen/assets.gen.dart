@@ -9,42 +9,17 @@
 
 import 'package:flutter/widgets.dart';
 
-class $AssetsGifsGen {
-  const $AssetsGifsGen();
-
-  /// File path: assets/gifs/clear_sky.gif
-  AssetGenImage get clearSky =>
-      const AssetGenImage('assets/gifs/clear_sky.gif');
-
-  /// File path: assets/gifs/clouds.gif
-  AssetGenImage get clouds => const AssetGenImage('assets/gifs/clouds.gif');
-
-  /// File path: assets/gifs/drizzle.gif
-  AssetGenImage get drizzle => const AssetGenImage('assets/gifs/drizzle.gif');
-
-  /// File path: assets/gifs/rain.gif
-  AssetGenImage get rain => const AssetGenImage('assets/gifs/rain.gif');
-
-  /// File path: assets/gifs/snow.gif
-  AssetGenImage get snow => const AssetGenImage('assets/gifs/snow.gif');
-
-  /// File path: assets/gifs/thunderstorm.gif
-  AssetGenImage get thunderstorm =>
-      const AssetGenImage('assets/gifs/thunderstorm.gif');
-
-  /// List of all assets
-  List<AssetGenImage> get values =>
-      [clearSky, clouds, drizzle, rain, snow, thunderstorm];
-}
-
 class $AssetsImagesGen {
   const $AssetsImagesGen();
+
+  /// File path: assets/images/clows.jpg
+  AssetGenImage get clows => const AssetGenImage('assets/images/clows.jpg');
 
   /// File path: assets/images/compass.png
   AssetGenImage get compass => const AssetGenImage('assets/images/compass.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [compass];
+  List<AssetGenImage> get values => [clows, compass];
 }
 
 class Assets {
@@ -52,7 +27,6 @@ class Assets {
 
   static const String package = 'fc_ui';
 
-  static const $AssetsGifsGen gifs = $AssetsGifsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
 }
 

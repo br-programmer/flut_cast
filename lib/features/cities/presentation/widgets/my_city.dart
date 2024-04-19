@@ -22,53 +22,44 @@ class MyCity extends ConsumerWidget {
     final daily = forecast?.daily[0];
     final min = (daily?.temp.min ?? 0).toInt();
     final max = (daily?.temp.max ?? 0).toInt();
-    final background = weather?.background;
 
-    return Hero(
-      tag: city.id!,
-      child: Material(
-        type: MaterialType.transparency,
-        child: ClipRRect(
-          borderRadius: borderRadius20,
-          child: FCGradient(
-            child: DismissibleTile(
-              ltrOverlayIndent: 0,
-              rtlBackground: const ColoredBox(color: Colors.red),
-              confirmDismiss: (direction) {
-                if (city.myLocation) return Future.value();
-                if (direction == DismissibleTileDirection.rightToLeft) {
-                  return ref.read(citiesNotifier.notifier).deleteCity(city);
-                }
-                return Future.value();
+    return Material(
+      type: MaterialType.transparency,
+      child: ClipRRect(
+        borderRadius: borderRadius20,
+        child: FCGradient(
+          child: DismissibleTile(
+            ltrOverlayIndent: 0,
+            rtlBackground: const ColoredBox(color: Colors.red),
+            confirmDismiss: (direction) {
+              if (city.myLocation) return Future.value();
+              if (direction == DismissibleTileDirection.rightToLeft) {
+                return ref.read(citiesNotifier.notifier).deleteCity(city);
+              }
+              return Future.value();
+            },
+            key: ValueKey(city.id),
+            child: InkWell(
+              onTap: () {
+                ref.read(StateNotifiers.currentPage.notifier).change(index);
+                context.pushNamed(
+                  Routes.forecast.name,
+                  extra: {'index': index},
+                );
               },
-              key: ValueKey(city.id),
-              child: InkWell(
-                onTap: () {
-                  ref.read(StateNotifiers.currentPage.notifier).change(index);
-                  context
-                      .pushNamed(Routes.forecast.name, extra: {'index': index});
-                },
-                child: AspectRatio(
-                  aspectRatio: 3,
-                  child: Stack(
-                    fit: StackFit.expand,
+              child: AspectRatio(
+                aspectRatio: 3,
+                child: Padding(
+                  padding: edgeInsetsH20.add(edgeInsetsV12),
+                  child: Column(
                     children: [
-                      if (background != null)
-                        background.image(fit: BoxFit.cover),
-                      Padding(
-                        padding: edgeInsetsH20.add(edgeInsetsV12),
-                        child: Column(
-                          children: [
-                            _Header(
-                              city: city,
-                              temp: temp,
-                              hour: current?.dt.fromEpoch.hourComplete ?? '',
-                            ),
-                            const Spacer(),
-                            _Footer(weather: weather, max: max, min: min),
-                          ],
-                        ),
+                      _Header(
+                        city: city,
+                        temp: temp,
+                        hour: current?.dt.fromEpoch.hourComplete ?? '',
                       ),
+                      const Spacer(),
+                      _Footer(weather: weather, max: max, min: min),
                     ],
                   ),
                 ),
@@ -81,7 +72,7 @@ class MyCity extends ConsumerWidget {
   }
 }
 
-class _Header extends StatelessWidget {
+class _Header extends StatefulWidget {
   const _Header({
     required this.city,
     required this.temp,
@@ -93,7 +84,13 @@ class _Header extends StatelessWidget {
   final String hour;
 
   @override
+  State<_Header> createState() => _HeaderState();
+}
+
+class _HeaderState extends State<_Header> with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Row(
       children: [
         Expanded(
@@ -101,20 +98,22 @@ class _Header extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                city.myLocation ? context.texts.misc.myLocation : city.city,
+                widget.city.myLocation
+                    ? context.texts.misc.myLocation
+                    : widget.city.city,
                 style: context.textTheme.headlineSmall?.copyWith(
                   fontWeight: AppFontWeight.bold,
                 ),
               ),
               Text(
-                city.myLocation ? city.city : hour,
+                widget.city.myLocation ? widget.city.city : widget.hour,
                 style: context.textTheme.titleLarge,
               ),
             ],
           ),
         ),
         TweenAnimationBuilder<int>(
-          tween: IntTween(begin: 0, end: temp),
+          tween: IntTween(begin: 0, end: widget.temp),
           duration: duration750ms,
           builder: (_, value, __) => Text(
             '$value°',
@@ -124,9 +123,12 @@ class _Header extends StatelessWidget {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
-class _Footer extends StatelessWidget {
+class _Footer extends StatefulWidget {
   const _Footer({
     required this.weather,
     required this.max,
@@ -138,16 +140,22 @@ class _Footer extends StatelessWidget {
   final int min;
 
   @override
+  State<_Footer> createState() => _FooterState();
+}
+
+class _FooterState extends State<_Footer> with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Row(
       children: [
         Text(
-          weather?.description.capitalize() ?? '',
+          widget.weather?.description.capitalize() ?? '',
           style: context.textTheme.titleLarge,
         ),
         const Spacer(),
         TweenAnimationBuilder<int>(
-          tween: IntTween(begin: 0, end: max),
+          tween: IntTween(begin: 0, end: widget.max),
           duration: duration750ms,
           builder: (_, value, __) => Text(
             context.texts.forecast.temperature.maximum(degree: value),
@@ -156,7 +164,7 @@ class _Footer extends StatelessWidget {
         ),
         space16,
         TweenAnimationBuilder<int>(
-          tween: IntTween(begin: 0, end: min),
+          tween: IntTween(begin: 0, end: widget.min),
           duration: duration750ms,
           builder: (_, value, __) => Text(
             context.texts.forecast.temperature.minimum(degree: value),
@@ -166,4 +174,7 @@ class _Footer extends StatelessWidget {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

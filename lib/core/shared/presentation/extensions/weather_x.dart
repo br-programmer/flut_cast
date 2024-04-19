@@ -2,13 +2,16 @@ import 'package:fc_domain/fc_domain.dart';
 import 'package:fc_ui/fc_ui.dart';
 
 extension WeatherX on Weather {
-  AssetGenImage? get background => switch (main.toLowerCase()) {
-        'clouds' => Assets.gifs.clouds,
-        'clear' => Assets.gifs.clearSky,
-        'snow' => Assets.gifs.snow,
-        'rain' => Assets.gifs.rain,
-        'drizzle' => Assets.gifs.drizzle,
-        'thunderstorm' => Assets.gifs.thunderstorm,
+  ShaderData? get shaderData => switch (main.toLowerCase()) {
+        'clouds' => (image: null, shaderName: 'clouds'),
+        'clear' => (image: null, shaderName: 'clear_sky'),
+        'drizzle' => (
+            image: Assets.images.clows.provider(),
+            shaderName: 'drizzle',
+          ),
+        'snow' => (image: null, shaderName: 'snow'),
+        'rain' => (image: null, shaderName: 'rain'),
+        'thunderstorm' => (image: null, shaderName: 'thunderstorm'),
         _ => null,
       };
 }
