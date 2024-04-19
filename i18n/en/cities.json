@@ -1,0 +1,7 @@
+{
+    "searchCity": "Search city, state, or country",
+    "noResults": "No results",
+    "noResultsFound": "No results found for {{query}}.",
+    "cancel": "Cancel",
+    "save": "Save"
+}

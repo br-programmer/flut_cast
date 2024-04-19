@@ -1,0 +1,19 @@
+name: fc_api_client
+description: Dart package serves as the API client for the Flut Cast app, providing seamless communication with external services and endpoints.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  dio: ^5.4.3
+  fc_common:
+    path: ../fc_common
+  freezed_annotation: ^2.4.1
+
+dev_dependencies:
+  build_runner: ^2.4.9
+  freezed: ^2.5.2
+  json_serializable: ^6.7.1
+  very_good_analysis: ^5.1.0

@@ -1,0 +1,19 @@
+name: fc_local_storage
+description: This Dart package is responsible for local storage management in the Flut Cast app, offering features for secure data storage, efficient data retrieval, and management of local file systems.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.3.3 <4.0.0"
+
+dependencies:
+  encrypt: ^5.0.3
+  flutter_secure_storage: ^9.0.0
+  fc_common:
+    path: ../fc_common 
+  fc_domain:
+    path: ../fc_domain
+  sembast: ^3.7.1
+  uuid: ^4.4.0
+
+

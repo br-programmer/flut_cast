@@ -1,0 +1,39 @@
+{
+    "temperature": {
+        "maximum": "Máxima: {{degree}}°C",
+        "minimum": "Mínima: {{degree}}°C"
+    },
+    "forecasts": {
+        "one": "Pronóstico para {{days}} día",
+        "other": "Pronóstico para {{days}} días"
+    },
+    "firstQuarterMoon": "Primer cuarto de luna",
+    "fullMoon": "Luna llena",
+    "lastQuarterMoon": "Último cuarto de luna",
+    "newMoon": "Luna nueva",
+    "waxingMoon": "Luna creciente",
+    "low": "Bajo",
+    "moderate": "Moderado",
+    "high": "Alto",
+    "veryHigh": "Muy Alto",
+    "today": "Hoy",
+    "now": "Ahora",
+    "moon": {
+        "moonrise": "Salida de la luna",
+        "moonset": "Puesta de la luna",
+        "moonPhase": "Fase de la luna"
+    },
+    "sensation": {
+        "uv": {
+            "title": "UV index",
+            "description": "{{level}} el resto del día"
+        },
+        "title": "Sensación",
+        "humedity": {
+            "one": "Más frío debido a la humedad",
+            "other": "Más cálido debido a la humedad"
+        }
+    },
+    "pressure": "Presion",
+    "wend": "Viento"
+}

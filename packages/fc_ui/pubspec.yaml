@@ -1,0 +1,47 @@
+name: fc_ui
+description: Flutter package providing custom themes, assets, colors, and widgets for a cohesive user interface experience across Flut Cast application
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.3.3 <4.0.0"
+
+dependencies:
+  cached_network_image: ^3.3.1
+  cupertino_icons: ^1.0.8
+  flex_color_scheme: ^7.3.1
+  flutter:
+    sdk: flutter
+  flutter_svg: ^2.0.10+1
+  intl: ^0.18.1
+  timezone: ^0.9.2
+
+flutter_gen:
+  output: lib/src/gen/
+
+  integrations:
+    flutter_svg: true
+
+  assets:
+    outputs:
+      package_parameter_enabled: true
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+  assets:
+    - assets/gifs/
+    - assets/images/
+
+  fonts:
+    - family: SFProDisplay
+      fonts:
+        - asset: lib/src/typography/fonts/SFProDisplay-Black.ttf
+        - asset: lib/src/typography/fonts/SFProDisplay-Bold.ttf
+        - asset: lib/src/typography/fonts/SFProDisplay-Light.ttf
+        - asset: lib/src/typography/fonts/SFProDisplay-Medium.ttf
+        - asset: lib/src/typography/fonts/SFProDisplay-Regular.ttf
+        - asset: lib/src/typography/fonts/SFProDisplay-Semibold.ttf
+
+

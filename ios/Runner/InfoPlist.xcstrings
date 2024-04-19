@@ -1,0 +1,24 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "NSLocationWhenInUseUsageDescription" : {
+      "comment" : "NSLocationWhenInUseUsageDescription",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location access is required for accurate weather forecasts using your current location."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se requiere acceso a la ubicación para pronósticos meteorológicos con tu ubicación actual."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

@@ -1,0 +1,15 @@
+name: fc_data
+description: Dart package provides the data layer functionality for the Flut Cast app, offering seamless remote data sources.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.3.3 <4.0.0"
+
+dependencies:
+  fc_api_client:
+    path: ../fc_api_client 
+  fc_common:
+    path: ../fc_common 
+  fc_domain:
+    path: ../fc_domain

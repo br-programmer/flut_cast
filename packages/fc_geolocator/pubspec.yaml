@@ -1,0 +1,14 @@
+name: fc_geolocator
+description: This Dart package handles location management for the Flut Cast app, providing features for location tracking, permission handling, and monitoring location updates.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.3.3 <4.0.0"
+
+dependencies:
+  fc_common:
+    path: ../fc_common 
+  fc_domain:
+    path: ../fc_domain
+  geolocator: ^11.0.0  

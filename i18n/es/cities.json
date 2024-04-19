@@ -1,0 +1,7 @@
+{
+    "searchCity": "Buscar ciudad, estado o país",
+    "noResults": "Ningún resultado",
+    "noResultsFound": "No se encontraron resultados para {{query}}.",
+    "cancel": "Cancelar",
+    "save": "Guardar"
+}
