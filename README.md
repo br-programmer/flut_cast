@@ -190,4 +190,4 @@ This project is licensed under the MIT License - see the [LICENSE][licence_link]
 > Feel free to customize and expand upon this README description based on the specifics of your project!
 
 [slang_link]:https://pub.dev/packages/slang
-[licence_link]: https://github.com/br-programmer/flut_cast/blob/main/LICENCE
+[licence_link]: https://github.com/br-programmer/flut_cast/blob/main/LICENSE
