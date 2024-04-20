@@ -336,7 +336,7 @@ packages:
     source: hosted
     version: "3.3.1"
   flutter_dismissible_tile:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_dismissible_tile
       sha256: "37795139ad3bd7127ac92cf787ac454f80f9bddce3dbe792951850917b461f3d"
@@ -966,14 +966,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.1"
-  timezone:
-    dependency: transitive
-    description:
-      name: timezone
-      sha256: "1cfd8ddc2d1cfd836bc93e67b9be88c3adaeca6f40a00ca999104c30693cdca0"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.9.2"
   timing:
     dependency: transitive
     description:

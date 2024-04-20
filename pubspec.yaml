@@ -24,7 +24,6 @@ dependencies:
     path: packages/fc_ui
   flutter:
     sdk: flutter
-  flutter_dismissible_tile: ^1.0.3
   flutter_hooks: ^0.20.5
   
   flutter_localizations:
