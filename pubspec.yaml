@@ -42,8 +42,6 @@ dependencies:
   slang: ^3.30.2
   slang_flutter: ^3.30.0
   sleek_circular_slider: ^2.0.1
-  timezone: ^0.9.2
-  
 
 dev_dependencies:
   build_runner: ^2.4.9

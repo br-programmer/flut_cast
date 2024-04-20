@@ -4,7 +4,6 @@ import 'package:flut_cast/core/core.dart';
 import 'package:flut_cast/features/features.dart';
 import 'package:flut_cast/i18n/translations.g.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dismissible_tile/flutter_dismissible_tile.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -23,50 +22,29 @@ class MyCity extends ConsumerWidget {
     final min = (daily?.temp.min ?? 0).toInt();
     final max = (daily?.temp.max ?? 0).toInt();
 
-    return Material(
-      type: MaterialType.transparency,
-      child: ClipRRect(
-        borderRadius: borderRadius20,
-        child: FCGradient(
-          child: DismissibleTile(
-            ltrOverlayIndent: 0,
-            rtlBackground: const ColoredBox(color: Colors.red),
-            confirmDismiss: (direction) {
-              if (city.myLocation) return Future.value();
-              if (direction == DismissibleTileDirection.rightToLeft) {
-                return ref.read(citiesNotifier.notifier).deleteCity(city);
-              }
-              return Future.value();
-            },
-            key: ValueKey(city.id),
-            child: InkWell(
-              onTap: () {
-                ref.read(StateNotifiers.currentPage.notifier).change(index);
-                context.pushNamed(
-                  Routes.forecast.name,
-                  extra: {'index': index},
-                );
-              },
-              child: AspectRatio(
-                aspectRatio: 3,
-                child: Padding(
-                  padding: edgeInsetsH20.add(edgeInsetsV12),
-                  child: Column(
-                    children: [
-                      _Header(
-                        city: city,
-                        temp: temp,
-                        hour: current?.dt.fromEpoch.hourComplete ?? '',
-                      ),
-                      const Spacer(),
-                      _Footer(weather: weather, max: max, min: min),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+    return FCDismissibleCard(
+      onPressed: () {
+        ref.read(StateNotifiers.currentPage.notifier).change(index);
+        context.pushNamed(
+          Routes.forecast.name,
+          extra: {'index': index},
+        );
+      },
+      onDeleted: () {
+        if (city.myLocation) return Future.value();
+        return ref.read(citiesNotifier.notifier).deleteCity(city);
+      },
+      dismissibleKey: ValueKey(city.id),
+      child: Column(
+        children: [
+          _Header(
+            city: city,
+            temp: temp,
+            hour: current?.dt.fromEpoch.hourComplete ?? '',
           ),
-        ),
+          gap16,
+          _Footer(weather: weather, max: max, min: min),
+        ],
       ),
     );
   }
