@@ -7,5 +7,5 @@ extension DateTimeX on DateTime {
 
   String dayLetter(String locale) => DateFormat('EEE', locale).format(this);
   String get hourNumber => DateFormat('HH').format(this);
-  String get hourComplete => DateFormat('HH:MM').format(this);
+  String get hourComplete => DateFormat('HH:mm').format(this);
 }
