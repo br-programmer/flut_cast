@@ -43,7 +43,7 @@ class ForecastBottomBar extends ConsumerWidget {
                         (index) {
                           final color = index == currentPage
                               ? Palette.white
-                              : Palette.grey.withOpacity(.1);
+                              : Palette.white.withOpacity(.25);
                           late Widget icon;
                           if (index == 0) {
                             icon = Icon(Icons.near_me, size: 12, color: color);

@@ -32,7 +32,7 @@ class FC_WeatherShaderState extends State<FCWeatherShader>
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (hasBackgroundImage) {
-        _loadImage();
+        loadImage();
       }
     });
     super.initState();
@@ -51,15 +51,15 @@ class FC_WeatherShaderState extends State<FCWeatherShader>
     super.dispose();
   }
 
-  int _startTime = 0;
+  int startTime = 0;
 
   double get _elapsedTimeInSeconds =>
-      (DateTime.now().millisecondsSinceEpoch - _startTime) / 1000;
+      (DateTime.now().millisecondsSinceEpoch - startTime) / 1000;
 
-  ui.Image? _image;
+  ui.Image? image;
 
-  Future<void> _loadImage() async {
-    _image = await loadImageFromAsset(data.image!);
+  Future<void> loadImage() async {
+    image = await loadImageFromAsset(data.image!);
     setState(() {});
   }
 
@@ -86,7 +86,7 @@ class FC_WeatherShaderState extends State<FCWeatherShader>
 
   @override
   Widget build(BuildContext context) {
-    _startTime = DateTime.now().millisecondsSinceEpoch;
+    startTime = DateTime.now().millisecondsSinceEpoch;
 
     return LayoutBuilder(builder: (context, snapshot) {
       final size = Size(context.mediaQuery.size.width, snapshot.maxHeight);
@@ -94,9 +94,9 @@ class FC_WeatherShaderState extends State<FCWeatherShader>
         width: size.width,
         height: size.height,
         child: FutureBuilder(
-          future: _loadShader(data.shaderName),
+          future: loadShader(data.shaderName),
           builder: (context, snapshot) {
-            if (snapshot.hasData && (hasBackgroundImage == (_image != null))) {
+            if (snapshot.hasData && (hasBackgroundImage == (image != null))) {
               final shader = snapshot.data!;
               shader
                 ..setFloat(1, size.width)
@@ -107,7 +107,7 @@ class FC_WeatherShaderState extends State<FCWeatherShader>
                 builder: (context, _) {
                   shader.setFloat(0, _elapsedTimeInSeconds);
                   if (hasBackgroundImage) {
-                    shader.setImageSampler(0, _image!);
+                    shader.setImageSampler(0, image!);
                   }
                   return CustomPaint(
                     painter: ShaderPainter(shader),
@@ -124,7 +124,7 @@ class FC_WeatherShaderState extends State<FCWeatherShader>
   }
 }
 
-Future<ui.FragmentShader> _loadShader(String shaderName) async {
+Future<ui.FragmentShader> loadShader(String shaderName) async {
   final program = await ui.FragmentProgram.fromAsset(
     'shaders/$shaderName.frag',
   );
