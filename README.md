@@ -19,7 +19,6 @@ For more information about subscription plans, usage limits, and pricing, please
 
 - **City Selection:** Choose specific cities from around the world and instantly view detailed weather information for each selected location. Whether you're planning a trip or simply curious about the weather elsewhere, FlutCast has you covered.
 
-- **Authentication:** Safeguard your account and securely access FlutCast through the authentication process.
 
 - **Favorite Cities:** Keep track of your most frequently visited or preferred cities by adding them to your favorites list. Easily access weather updates for these cities with just a tap, ensuring you're always prepared for changing conditions.
 
