@@ -2,6 +2,19 @@
 
 > FlutCast is your ultimate weather companion powered by Flutter. Stay ahead of the forecast with real-time weather updates for your favorite cities. Explore current conditions, hourly forecasts, and long-range predictions effortlessly. With features like city selection, login, and favorites, FlutCast makes it easy to stay informed about the weather no matter where you are. Download now and experience the seamless integration of weather information and Flutter technology.
 ---
+
+## API Usage
+
+FlutCast utilizes the [One Call API 3.0][one_call] provided by a third-party weather service to retrieve weather data. This API offers extensive weather information including current weather conditions, hourly forecasts, and daily forecasts for any location around the world.
+
+### Subscription and Usage Limits
+
+To access the [One Call API 3.0][one_call], you need to subscribe to the service and provide your payment information. Upon subscription, you'll receive 1000 free API calls per day. Please note that exceeding this limit may result in additional charges based on the pricing plan of the service provider.
+
+For more information about subscription plans, usage limits, and pricing, please visit the official website of the [weather service provider][openweathermap].
+
+---
+
 ## Key Features:
 
 - **City Selection:** Choose specific cities from around the world and instantly view detailed weather information for each selected location. Whether you're planning a trip or simply curious about the weather elsewhere, FlutCast has you covered.
@@ -191,3 +204,5 @@ This project is licensed under the MIT License - see the [LICENSE][licence_link]
 
 [slang_link]:https://pub.dev/packages/slang
 [licence_link]: https://github.com/br-programmer/flut_cast/blob/main/LICENSE
+[one_call]: https://openweathermap.org/api/one-call-3
+[openweathermap]: https://openweathermap.org/api/
