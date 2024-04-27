@@ -3,7 +3,6 @@ import 'dart:ui' as ui;
 
 import 'package:fc_ui/fc_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 part 'shader_painter.dart';
@@ -11,8 +10,13 @@ part 'shader_painter.dart';
 typedef ShaderData = ({ImageProvider? image, String shaderName});
 
 class FCWeatherShader extends StatefulWidget {
-  const FCWeatherShader({super.key, required this.shaderData});
+  const FCWeatherShader({
+    super.key,
+    required this.shaderData,
+    required this.tag,
+  });
   final ShaderData shaderData;
+  final Object tag;
 
   @override
   State<FCWeatherShader> createState() => FC_WeatherShaderState();
@@ -88,39 +92,52 @@ class FC_WeatherShaderState extends State<FCWeatherShader>
   Widget build(BuildContext context) {
     startTime = DateTime.now().millisecondsSinceEpoch;
 
-    return LayoutBuilder(builder: (context, snapshot) {
-      final size = Size(context.mediaQuery.size.width, snapshot.maxHeight);
-      return SizedBox(
-        width: size.width,
-        height: size.height,
-        child: FutureBuilder(
-          future: loadShader(data.shaderName),
-          builder: (context, snapshot) {
-            if (snapshot.hasData && (hasBackgroundImage == (image != null))) {
-              final shader = snapshot.data!;
-              shader
-                ..setFloat(1, size.width)
-                ..setFloat(2, size.height);
+    return Hero(
+      tag: widget.tag,
+      child: ClipRRect(
+        borderRadius: borderRadius20,
+        child: LayoutBuilder(
+          builder: (_, constraints) {
+            final size = Size(
+              context.mediaQuery.size.width,
+              constraints.maxHeight,
+            );
+            return SizedBox(
+              width: size.width,
+              height: size.height,
+              child: FutureBuilder(
+                future: loadShader(data.shaderName),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData &&
+                      (hasBackgroundImage == (image != null))) {
+                    final shader = snapshot.data!;
+                    shader
+                      ..setFloat(1, size.width)
+                      ..setFloat(2, size.height);
 
-              return AnimatedBuilder(
-                animation: _controller,
-                builder: (context, _) {
-                  shader.setFloat(0, _elapsedTimeInSeconds);
-                  if (hasBackgroundImage) {
-                    shader.setImageSampler(0, image!);
+                    return AnimatedBuilder(
+                      animation: _controller,
+                      builder: (context, _) {
+                        shader.setFloat(0, _elapsedTimeInSeconds);
+                        if (hasBackgroundImage) {
+                          shader.setImageSampler(0, image!);
+                        }
+                        return CustomPaint(
+                          painter: ShaderPainter(shader),
+                          size: size,
+                        );
+                      },
+                    );
+                  } else {
+                    return SizedBox.expand();
                   }
-                  return CustomPaint(
-                    painter: ShaderPainter(shader),
-                  );
                 },
-              );
-            } else {
-              return SizedBox.expand();
-            }
+              ),
+            );
           },
         ),
-      );
-    });
+      ),
+    );
   }
 }
 
