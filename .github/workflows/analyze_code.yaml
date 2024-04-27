@@ -74,7 +74,7 @@ jobs:
         run: flutter pub get
 
       - name: Get FC UI dependencies
-        working-directory: ./packages/sk_ui
+        working-directory: ./packages/fc_ui
         shell: bash
         run: flutter pub get
 
