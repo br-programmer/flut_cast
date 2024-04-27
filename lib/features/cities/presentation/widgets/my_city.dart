@@ -21,30 +21,45 @@ class MyCity extends ConsumerWidget {
     final daily = forecast?.daily[0];
     final min = (daily?.temp.min ?? 0).toInt();
     final max = (daily?.temp.max ?? 0).toInt();
-
-    return FCDismissibleCard(
-      onPressed: () {
-        ref.read(StateNotifiers.currentPage.notifier).change(index);
-        context.pushNamed(
-          Routes.forecast.name,
-          extra: {'index': index},
-        );
-      },
-      onDeleted: () {
-        if (city.myLocation) return Future.value();
-        return ref.read(citiesNotifier.notifier).deleteCity(city);
-      },
-      dismissibleKey: ValueKey(city.id),
-      child: Column(
-        children: [
-          _Header(
-            city: city,
-            temp: temp,
-            hour: current?.dt.fromEpoch.hourComplete ?? '',
-          ),
-          gap16,
-          _Footer(weather: weather, max: max, min: min),
-        ],
+    final shaderData = weather?.shaderData;
+    // if (shaderData != null)
+    //           FCWeatherShader(
+    //             key: UniqueKey(),
+    //             shaderData: shaderData,
+    //           ),
+    return AspectRatio(
+      aspectRatio: 3,
+      child: FCDismissibleCard(
+        onPressed: () {
+          ref.read(StateNotifiers.currentPage.notifier).change(index);
+          context.pushNamed(
+            Routes.forecast.name,
+            extra: {'index': index},
+          );
+        },
+        onDeleted: () {
+          if (city.myLocation) return Future.value();
+          return ref.read(citiesNotifier.notifier).deleteCity(city);
+        },
+        dismissibleKey: ValueKey(city.id),
+        background: shaderData != null
+            ? FCWeatherShader(
+                key: UniqueKey(),
+                shaderData: shaderData,
+                tag: city.id!,
+              )
+            : null,
+        child: Column(
+          children: [
+            _Header(
+              city: city,
+              temp: temp,
+              hour: current?.dt.fromEpoch.hourComplete ?? '',
+            ),
+            gap16,
+            _Footer(weather: weather, max: max, min: min),
+          ],
+        ),
       ),
     );
   }
