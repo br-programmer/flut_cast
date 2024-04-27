@@ -43,20 +43,27 @@ class _ForecastScreenState extends ConsumerState<ForecastScreen> {
     return Scaffold(
       body: Material(
         type: MaterialType.transparency,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            if (shaderData != null) FCWeatherShader(shaderData: shaderData),
-            PageView.builder(
-              controller: controller,
-              onPageChanged:
-                  ref.read(StateNotifiers.currentPage.notifier).change,
-              itemBuilder: (_, index) => PageViewItem(
-                city: myCities[index],
+        child: FCGradient(
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              if (shaderData != null)
+                FCWeatherShader(
+                  key: UniqueKey(),
+                  shaderData: shaderData,
+                  tag: currentCity.id!,
+                ),
+              PageView.builder(
+                controller: controller,
+                onPageChanged:
+                    ref.read(StateNotifiers.currentPage.notifier).change,
+                itemBuilder: (_, index) => PageViewItem(
+                  city: myCities[index],
+                ),
+                itemCount: myCities.length,
               ),
-              itemCount: myCities.length,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       extendBody: true,
