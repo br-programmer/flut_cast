@@ -27,7 +27,7 @@ float sn(vec2 p){
 void main()
 {
     vec2 fragCoord = FlutterFragCoord();
-	vec2 uv = fragCoord.xy / iResolution.y;
+	vec2 uv = fragCoord.xy / iResolution.xy;
 
 	uv+=iMouse.xy/ iResolution.xy;
 	
@@ -72,16 +72,12 @@ void main()
 	lightning=lightning*2.;
 	
 	vec2 moonp = vec2(0.5,0.8);
-	float moon = smoothstep(0.95,0.956,1.-length(uv-moonp));
 	vec2 moonp2 = moonp + vec2(0.015, 0);
-	moon -= smoothstep(0.93,0.956,1.-length(uv-moonp2));
-	moon = clamp(moon, 0., 1.);
-	moon += 0.3*smoothstep(0.80,0.956,1.-length(uv-moonp));
 
 	clouds+= pow(1.-length(uv-moonp),1.7)*0.3;
 
 	clouds*=0.8;
-	clouds += lightning + moon +0.2;
+	clouds += lightning +0.2;
 
 	float ground = smoothstep(0.07,0.075,f*(p.y-0.98)+0.01);
 	

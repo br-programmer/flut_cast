@@ -6,7 +6,7 @@ uniform vec3 iResolution;
 out vec4 fragColor;
 
 float hash(vec2 p) {
-    p  = 50.0*fract( p*0.3183099 + vec2(0.71,0.113));
+    p  = 2.0*fract( p*0.3183099 + vec2(0.2,0.113));
     return -1.0+2.0*fract( p.x*p.y*(p.x+p.y) );
 }
 float noise( in vec2 p ){
@@ -36,10 +36,9 @@ float layers=3.;
 void main()
 {
     vec2 fragCoord = FlutterFragCoord();
-    // Normalized pixel coordinates (from -1 to 1)
     vec2 uv = (fragCoord-.5*iResolution.xy)/iResolution.y;
     
-    vec2 speed= 2.*vec2(2.,cos(iTime*.03))*(.9+cos(.21+iTime*.023)*.2);
+    vec2 speed= 2.*vec2(2.,cos(iTime*.1))*(.9+cos(.21+iTime*.1)*.2);
     uv+=speed;
 
     vec3 clouds,col;
@@ -47,7 +46,7 @@ void main()
     vec2 uvOffset=.05*vec2(fracNoise(uv+iTime*.017));
     
     for(float i=0.f; i<layers; ++i){
-        clouds = vec3(min(.9,smoothstep(.4-(i*.03),.75+(i*.035),fracNoise(i+uv+uvOffset))*fracNoise(uv+speed*.03*i)));
+        clouds = vec3(min(1,smoothstep(.4-(i*.03),.75+(i*.035),fracNoise(i+uv+uvOffset))*fracNoise(uv+speed*.03*i)));
         col+=clouds;
         ++passes;
     }    
@@ -55,6 +54,6 @@ void main()
     col+=vec3(.25,.2,.5);
     col=min(col,vec3(.98));    
 
-    fragColor = vec4(col,1.);
+    fragColor = vec4(col,0.35);
 }
 
