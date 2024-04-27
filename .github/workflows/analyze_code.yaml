@@ -1,0 +1,93 @@
+name: FC Check Source Code
+
+on:
+  pull_request:
+    types: [synchronize, opened, reopened, ready_for_review]
+    branches: [main]
+    workflow_dispatch:
+
+jobs:
+  analyze-and-test:
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.pull_request.draft }}
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-flutter-
+      - uses: actions/checkout@v4
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: '21'
+
+      - name: Get FC Common dependencies
+        working-directory: ./packages/fc_common
+        shell: bash
+        run: flutter pub get
+      - name: Generate .freezed and .g on FC Common
+        working-directory: ./packages/fc_common
+        shell: bash
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Get FC Api Client dependencies
+        working-directory: ./packages/fc_api_client
+        shell: bash
+        run: flutter pub get
+      - name: Generate .freezed and .g on FC Api Client
+        working-directory: ./packages/fc_api_client
+        shell: bash
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Get SK Domain dependencies
+        working-directory: ./packages/fc_domain
+        shell: bash
+        run: flutter pub get
+      - name: Generate .freezed and .g on FC domain
+        working-directory: ./packages/fc_domain
+        shell: bash
+        run: dart run build_runner build --delete-conflicting-outputs
+      
+      - name: Get FC Data dependencies
+        working-directory: ./packages/fc_data
+        shell: bash
+        run: flutter pub get
+
+      - name: Get FC Local Storage dependencies
+        working-directory: ./packages/fc_local_storage
+        shell: bash
+        run: flutter pub get
+
+      - name: Get FC Geolocator
+        working-directory: ./packages/fc_geolocator
+        shell: bash
+        run: flutter pub get
+
+      - name: Get FC UI dependencies
+        working-directory: ./packages/fc_ui
+        shell: bash
+        run: flutter pub get
+
+      - name: Get FC dependencies
+        shell: bash
+        run: flutter pub get
+      - name: Generate .freezed and .g on FC
+        shell: bash
+        run: dart run build_runner build --delete-conflicting-outputs
+      - name: Generate translations on FC
+        shell: bash
+        run: dart run slang
+        
+      - name: Run FC Analyzer
+        shell: bash
+        run: flutter analyze

@@ -1,7 +1,11 @@
 # Flut Cast
 
+[![FC Check Source Code][analyze_code_badge]][workflow]
+
 > FlutCast is your ultimate weather companion powered by Flutter. Stay ahead of the forecast with real-time weather updates for your favorite cities. Explore current conditions, hourly forecasts, and long-range predictions effortlessly. With features like city selection, login, and favorites, FlutCast makes it easy to stay informed about the weather no matter where you are. Download now and experience the seamless integration of weather information and Flutter technology.
 ---
+
+
 
 ## API Usage
 
@@ -205,3 +209,5 @@ This project is licensed under the MIT License - see the [LICENSE][licence_link]
 [licence_link]: https://github.com/br-programmer/flut_cast/blob/main/LICENSE
 [one_call]: https://openweathermap.org/api/one-call-3
 [openweathermap]: https://openweathermap.org/api/
+[analyze_code_badge]:https://github.com/br-programmer/flut_cast/actions/workflows/analyze_code.yaml/badge.svg
+[workflow]:https://github.com/br-programmer/flut_cast/actions/workflows/analyze_code.yaml
