@@ -110,7 +110,12 @@ class PreviewCity extends ConsumerWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              if (shaderData != null) FCWeatherShader(shaderData: shaderData),
+              if (shaderData != null)
+                FCWeatherShader(
+                  key: UniqueKey(),
+                  shaderData: shaderData,
+                  tag: city,
+                ),
               PageViewItem(city: city),
               Align(
                 alignment: Alignment.topCenter,
